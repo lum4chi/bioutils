@@ -18,13 +18,9 @@ for arg in "$@"; do
   # if [[ $arg == [:digit:] ]]; then opt+="${arg} "; continue; fi
 done
 
-echo $files
-echo $opt
-
-
-# echo "Converting $files:";
-# for file in $files; do
-#   echo " - cooking ${file%.*}..."
-#   samtools view $opt $file > ${file%.*}.sam;
-# done
-# echo 'Done!'
+echo "Converting $files:";
+for file in $files; do
+  echo " - cooking ${file%.*}..."
+  samtools view $opt $file > ${file${opt// /_}%.*}.sam;
+done
+echo 'Done!'
