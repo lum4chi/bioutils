@@ -11,13 +11,16 @@ fi
 
 opt=()
 files=()
+num=()
 for arg in "$@"; do
   if [[ $arg == *.* ]]; then files+="${arg} "; continue; fi
   if [[ $arg == -* ]]; then opt+="${arg} "; continue; fi
+  if [[ $arg == [:digit:] ]]; then opt+="${arg} "; continue; fi
 done
 
 echo $files
 echo $opt
+echo $num
 
 
 # echo "Converting $files:";
