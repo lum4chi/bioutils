@@ -13,6 +13,7 @@ opt=()
 files=()
 for arg in "$@"; do
   if [[ $arg == -? ]]; then opt+="${arg} "; fi
+  if [[ $arg == *.* ]]; then files+="${arg} "; fi
 done
 
 echo $opt
