@@ -21,6 +21,6 @@ done
 echo "Converting $files:";
 for file in $files; do
   echo " - cooking ${file%.*}..."
-  samtools view $opt $file > ${file${opt// /_}%.*}.sam;
+  samtools view $opt $file > ${file%.*}${opt// /_}.sam;
 done
 echo 'Done!'
