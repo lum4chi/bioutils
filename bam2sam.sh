@@ -10,9 +10,9 @@ if [[ -z "$@" ]]; then
 fi
 
 opt=()
-
-for o in "$@"; do
-  opt+="${o} "
+files=()
+for arg in "$@"; do
+  if [[ $arg =~ ^- ]]; then opt+="${arg} "
 done
 
 echo $opt
