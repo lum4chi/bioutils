@@ -5,8 +5,8 @@
 
 # if [[ -z "$@" ]]; then files="*.bam"; else files="$@"; fi
 if [[ -z "$@" ]]; then
-  echo 'Usage: bam2sam view [options] <files>'
-  echo '- exe: bam2sam view -F 4'
+  echo 'Usage: bam2sam [options] <files>'
+  echo '- exe: bam2sam -F 4 *.bam'
 fi
 
 opt=()
