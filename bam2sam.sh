@@ -12,7 +12,7 @@ fi
 opt=()
 
 for o in "$@"; do
-  opt+=o
+  opt+=$o
 done
 
 echo $opt
