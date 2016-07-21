@@ -16,8 +16,8 @@ for arg in "$@"; do
   if [[ $arg == *.* ]]; then files+="${arg} "; fi
 done
 
-echo $opt
-
+echo opt: $opt
+echo files: $files
 # echo "Converting $files:";
 # for file in $files; do
 #   echo " - cooking ${file%.*}..."
