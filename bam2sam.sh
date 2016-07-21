@@ -12,8 +12,8 @@ fi
 opt=()
 files=()
 for arg in "$@"; do
-  if [[ $arg == -? ]]; then opt+="${arg} "
-done;
+  if [[ $arg =~ ^\-. ]]; then opt+="${arg} "
+done
 
 echo $opt
 
