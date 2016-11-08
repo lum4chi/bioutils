@@ -5,6 +5,7 @@
 
 import vcf as pyvcf
 import pandas as pd
+import sys, argparse
 
 # Extract from vcf interesting field
 def vcf_iterable(vcf):
@@ -18,13 +19,16 @@ def vcf_iterable(vcf):
         yield record
 
 # Read input
-ion_file = sys.argv[1] # ie: 'data/FN37_v1-full.tsv'
-vcf_file = sys.argv[2] # ie: 'data/FN37_v1.vcf'
+parser = argparse.ArgumentParser()
+parser.add_argument("input_table")
+parser.add_argument("input_vcf")
+args = parser.parse_args()
+ion_file, vcf_file = args.input_table, args.input_vcf
+
 
 # Merge information
 ion = pd.read_table(ion_file)
 in_vcf = pyvcf.Reader(open(vcf_file))
 vcf = pd.DataFrame.from_records(list(vcf_iterable(in_vcf)), columns=['# locus','_OPOS','_OREF','_OALT','_QUAL']+['_'+sample+'_GT' for sample in in_vcf.samples])
 merged = pd.merge(ion, vcf, on='# locus')
-
-merged.to_csv(ion_file+'_mergedVCF.tsv', sep='\t', index=False)
+merged.to_csv(sys.stdout, sep='\t', index=False)
