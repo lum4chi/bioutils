@@ -41,7 +41,7 @@ out_suffix = args.output_suffix
 tables = sorted([t for t in files if os.path.splitext(t)[1] != '.vcf'])
 vcfs = sorted([v for v in files if os.path.splitext(v)[1] == '.vcf'])
 
-# Multiple input
+# Process by pair
 for table, vcf in zip(tables, vcfs):
     # Print on stdout (if multiple file, header will be repeated) or append to
     # table name the provided suffix and write to multiple file
