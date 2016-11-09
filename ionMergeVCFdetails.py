@@ -5,7 +5,7 @@
 
 import vcf as pyvcf
 import pandas as pd
-import sys, argparse
+import os, sys, argparse
 
 # Extract from vcf interesting field
 def vcf_iterable(vcf):
@@ -18,17 +18,32 @@ def vcf_iterable(vcf):
             ] + [sample['GT'] for sample in var.samples]
         yield record
 
+# Merge information
+def mergeOne(ion_file, vcf_file):
+    ion = pd.read_table(ion_file)
+    in_vcf = pyvcf.Reader(open(vcf_file))
+    vcf = pd.DataFrame.from_records(list(vcf_iterable(in_vcf)), \
+            columns=['# locus','_OPOS','_OREF','_OALT','_QUAL'] + \
+                    ['_'+sample+'_GT' for sample in in_vcf.samples])
+    return pd.merge(ion, vcf, on='# locus')
+
 # Read input
 parser = argparse.ArgumentParser()
-parser.add_argument("input_table")
-parser.add_argument("input_vcf")
+parser.add_argument("files", nargs='+', help="List of tables and vcfs to merge")
+parser.add_argument("-o", "--output_suffix", help="Specify a suffix to merged \
+                    output files. If provided, files will be saved in same \
+                    input tables directory.")
 args = parser.parse_args()
-ion_file, vcf_file = args.input_table, args.input_vcf
+files = args.files
+out_suffix = args.output_suffix
 
+tables = sorted([t for t in files if os.path.splitext(t)[1] != '.vcf'])
+vcfs = sorted([v for v in files if os.path.splitext(v)[1] == '.vcf'])
 
-# Merge information
-ion = pd.read_table(ion_file)
-in_vcf = pyvcf.Reader(open(vcf_file))
-vcf = pd.DataFrame.from_records(list(vcf_iterable(in_vcf)), columns=['# locus','_OPOS','_OREF','_OALT','_QUAL']+['_'+sample+'_GT' for sample in in_vcf.samples])
-merged = pd.merge(ion, vcf, on='# locus')
-merged.to_csv(sys.stdout, sep='\t', index=False)
+# Multiple input
+for table, vcf in zip(tables, vcfs):
+    # Print on stdout or append to table name the provided suffix
+    out = sys.stdout if out_suffix is None else os.path.splitext(table)[0] + \
+                                                out_suffix + \
+                                                os.path.splitext(table)[1]
+    mergeOne(table, vcf).to_csv(out, sep='\t', index=False)
