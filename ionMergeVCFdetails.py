@@ -37,12 +37,14 @@ args = parser.parse_args()
 files = args.files
 out_suffix = args.output_suffix
 
+# Split files by extension and (hopefully) paired by lexicographic sorting
 tables = sorted([t for t in files if os.path.splitext(t)[1] != '.vcf'])
 vcfs = sorted([v for v in files if os.path.splitext(v)[1] == '.vcf'])
 
 # Multiple input
 for table, vcf in zip(tables, vcfs):
-    # Print on stdout or append to table name the provided suffix
+    # Print on stdout (if multiple file, header will be repeated) or append to
+    # table name the provided suffix and write to multiple file
     out = sys.stdout if out_suffix is None else os.path.splitext(table)[0] + \
                                                 out_suffix + \
                                                 os.path.splitext(table)[1]
