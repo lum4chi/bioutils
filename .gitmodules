@@ -1,0 +1,3 @@
+[submodule "osutils"]
+	path = osutils
+	url = https://github.com/lum4chi/osutils

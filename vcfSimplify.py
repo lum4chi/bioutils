@@ -46,7 +46,7 @@ if __name__ == '__main__':
     parser.add_argument("files", nargs='+', help="List of vcfs to filter")
     parser.add_argument("-o", "--output_suffix", help="Specify a suffix to \
                         merged output files. If provided, files will be saved \
-                        in same input tables directory.")
+                        in same input directory.")
     args = parser.parse_args()
     files = args.files
     out_suffix = args.output_suffix
