@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2016 Francesco Lumachi <francesco.lumachi@gmail.com>
 ''' Goal of this script automatically analise VCFs in order to filter them and
     be readed from a number of application. '''
 
+from osutils.common import appendSuffix
 import vcf as pyvcf
 import os, sys, argparse
 from itertools import chain
@@ -49,11 +50,8 @@ if __name__ == '__main__':
                         in same input directory.")
     args = parser.parse_args()
     files = args.files
-    out_suffix = args.output_suffix
+    suffix = args.output_suffix
     for vcf in files:
-        out = sys.stdout if out_suffix is None else open(
-                                                    os.path.splitext(vcf)[0] + \
-                                                    out_suffix + \
-                                                    os.path.splitext(vcf)[1],
-                                                    'w')
+        out = sys.stdout if suffix is None else \
+                                        open(appendSuffix(vcf, suffix), 'w')
         filterVCF(vcf, out)
