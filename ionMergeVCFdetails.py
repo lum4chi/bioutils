@@ -3,7 +3,7 @@
 #
 # Copyright (C) 2016 Francesco Lumachi <francesco.lumachi@gmail.com>
 ''' Goal of this script is enrich ThermoFisher Ion Torrent™ Variant Caller
-    output (TSV) with some raw information provided only by VCF file. '''
+    output (TSV file) with some raw information provided only by VCF file. '''
 
 import vcf as pyvcf
 import pandas as pd
