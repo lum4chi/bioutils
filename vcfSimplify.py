@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2016 Francesco Lumachi <francesco.lumachi@gmail.com>
-''' Goal of this script automatically analise VCFs in order to filter them and
-    be readed from a number of application. '''
+''' Goal of this script is automatically analise VCFs in order to filter them
+    and achieve maximum compatibility to various application. '''
 
 from osutils.common import appendSuffix
 import vcf as pyvcf
