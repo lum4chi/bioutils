@@ -25,9 +25,9 @@ def mergeOne(ion_file, vcf_file):
     ion = pd.read_table(ion_file, comment='#')
     in_vcf = pyvcf.Reader(open(vcf_file))
     vcf = pd.DataFrame.from_records(list(vcf_iterable(in_vcf)), \
-            columns=['# locus','_OPOS','_OREF','_OALT','_QUAL'] + \
+            columns=['Locus','_OPOS','_OREF','_OALT','_QUAL'] + \
                     ['_'+sample+'_GT' for sample in in_vcf.samples])
-    return pd.merge(ion, vcf, on='# locus')
+    return pd.merge(ion, vcf, on='Locus')
 
 # Read input
 parser = argparse.ArgumentParser()
