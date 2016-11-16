@@ -22,7 +22,7 @@ def vcf_iterable(vcf):
 
 # Merge information
 def mergeOne(ion_file, vcf_file):
-    ion = pd.read_table(ion_file)
+    ion = pd.read_table(ion_file, comment='#')
     in_vcf = pyvcf.Reader(open(vcf_file))
     vcf = pd.DataFrame.from_records(list(vcf_iterable(in_vcf)), \
             columns=['# locus','_OPOS','_OREF','_OALT','_QUAL'] + \
